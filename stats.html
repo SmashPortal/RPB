@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Point-Buy</title>
+    <style>
+        html, body {
+            margin: 0;
+            width: 100%; height: 100%;
+            align-content: center;
+        }
+        table {
+            margin: auto;
+            font-family: monospace;
+            font-size: min(15vw, 15vh);
+        }
+        td {
+            padding: .2em;
+            text-align: center;
+        }
+    </style>
+    <script>
+        const cost = s => s < 14 ? 1 : 2
+        window.onload = () => {
+            console.log([8] * 6)
+            let [stats, pts] = [[...Array(6)].map(_ => ({ v: 8 })), 27]
+            while (pts > 0) {
+                let f = stats.filter(s => s.v < 15 && cost(s.v + 1) <= pts)
+                pts -= cost(++f[Math.floor(Math.random() * f.length)].v)
+            }
+            let d = document.getElementById("d").getElementsByTagName("td")
+            stats.forEach((s, i) => d[i].textContent = s.v)
+        }
+    </script>
+</head>
+<body>
+    <table id="d">
+        <tr><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td></tr>
+    </table>
+</body>
+</html>
